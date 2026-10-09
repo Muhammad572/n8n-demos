@@ -1,0 +1,100 @@
+{
+  "name": "Lead qualification – error log",
+  "nodes": [
+    {
+      "name": "When a workflow fails",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {},
+      "id": "eb5061c4-6240-4caa-ac87-6d0dae27ed2e"
+    },
+    {
+      "name": "Log the error",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "roq4b0quR8KITJhe"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "workflow": "={{ $json.workflow.name }}",
+            "node": "={{ $json.execution.lastNodeExecuted }}",
+            "message": "={{ $json.execution.error.message }}",
+            "execution_url": "={{ $json.execution.url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "workflow",
+              "displayName": "workflow",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "node",
+              "displayName": "node",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "execution_url",
+              "displayName": "execution_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "596f4bf5-32fa-49d2-a4fa-c98347144bb6"
+    }
+  ],
+  "connections": {
+    "When a workflow fails": {
+      "main": [
+        [
+          {
+            "node": "Log the error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
